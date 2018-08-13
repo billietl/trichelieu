@@ -28,6 +28,7 @@ def on_message(message):
         else:
             suite = "TOUT VA BIEN !"
         alerte = 'IL EST {} HEURES {} DU MATIN ! {}'.format(heure.tm_hour, heure.tm_min, suite)
+        print("# Sending on {}'s channel {} : {}".format(str(message.channel.server), str(message.channel), alerte))
         yield from client.send_message(message.channel, alerte)
 
 client.run(token)
