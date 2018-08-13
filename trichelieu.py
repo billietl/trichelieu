@@ -1,14 +1,16 @@
 #!/bin/env python3
 
-import asyncio, discord, random, re, time
+import asyncio, os, random, re, time
+import discord
 
-token = ''
+token = os.environ['token']
 taux_spam = 100
 
 client = discord.Client()
 
 @client.event
-async def on_ready():
+@asyncio.coroutine
+def on_ready():
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
@@ -26,7 +28,7 @@ def on_message(message):
         else:
             suite = "TOUT VA BIEN !"
         alerte = 'IL EST {} HEURES {} DU MATIN ! {}'.format(heure.tm_hour, heure.tm_min, suite)
-        yield from message.channel.send(alerte)
+        yield from client.send_message(message.channel, alerte)
 
 client.run(token)
 
