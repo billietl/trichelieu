@@ -20,6 +20,10 @@ def on_ready():
 @asyncio.coroutine
 def on_message(message):
     de_spam = random.randint(1,taux_spam)
+    if (re.match(".*j'ai perdu.*", message.content, re.IGNORECASE) and message.author != client.user ):
+        alerte = "Pas merci {}, à cause de toi j'ai perdu !".format(message.author.nick)
+        print("# Sending on {}'s channel {} : {}".format(str(message.channel.server), str(message.channel), alerte))
+        yield from client.send_message(message.channel, alerte)
     if (re.match(".*quel(le)? heure.*\?.*", message.content, re.IGNORECASE) or de_spam == 1):
         heure = time.localtime()
         de_perdu = random.randint(1,100)
@@ -32,4 +36,3 @@ def on_message(message):
         yield from client.send_message(message.channel, alerte)
 
 client.run(token)
-
